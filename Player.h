@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <string>
-#include "utilities.h"
 
 class Player {
 private:
@@ -15,18 +14,18 @@ private:
     int coins;
 
 public:
-    Player(char* name, const int maxHp = 100, const int force = 5);
+    Player(char* name, int maxHp = 100, int force = 5);
 
-    void printInfo();
+    void printInfo() const;
     void levelUp();
-    const int getLevel();
-    void buff(int i);
-    void heal(int i);
-    void damage(int i);
-    bool isKnockedOut();
-    void addCoins(int i);
-    bool pay(int i);
-    int getAttackStrength();
+    int getLevel() const;
+    void buff(const int i);
+    void heal(const int i);
+    void damage(const int i);
+    bool isKnockedOut() const;
+    void addCoins(const int i);
+    bool pay(const int i);
+    int getAttackStrength() const;
     // Add other member functions or variables as needed
 };
 
