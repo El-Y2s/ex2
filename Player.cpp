@@ -1,54 +1,64 @@
 #include "Player.h"
 
+Player::Player(char* name, const int maxHp, const int force)
+{
+    this->name = name;
+    this->level = 1;
+    this->coins = 0;
+    this->force = force;
+    this->maxHP = maxHp;
+    this->HP = maxHp;
+}
+
 void Player::printInfo(){
-    printPlayerInfo(this->name, this->level, this->force, this->HP, this->coins);
+    printPlayerInfo(name, level, force, HP, coins);
 }
 
 void Player::levelUp(){
-    this->level++;
+    level++;
 }
 
 const int Player::getLevel(){
-    return this->level;
+    return level;
 }
 
 void Player::buff(int i){
-    this->force += i;
+    force += i;
 }
 
 void Player::heal(int i){
-    if((this->HP + i) >= this->maxHP){
-        this->HP = this->maxHP;
+    if((HP + i) >= maxHP){
+        HP = maxHP;
         return;
     }
     if(i <= 0) return;
-    this->HP += i;
+    HP += i;
 }
 
 void Player::damage(int i){
-    if(this->HP <= i){
-        this->HP = 0;
+    if(HP <= i){
+        HP = 0;
         return;
     }
     if(i <= 0) return;
-    this->HP -= i;
+    HP -= i;
 }
 
 bool Player::isKnockedOut(){
-    return !(this->HP);
+    return !(HP);
 }
 
 void Player::addCoins(int i){
     if(i <= 0) return;
-    this->coins += i;
+    coins += i;
 }
 
 bool Player::pay(int i){
-    if((i < 0) || this->coins < i) return false;
-    this->coins -= i;
+    if((i < 0) || coins < i) return false;
+    coins -= i;
     return true;
 }
 
 int Player::getAttackStrength(){
-    return (this->force + this->level); 
+    return (force + level); 
 }
