@@ -4,7 +4,7 @@ void Player::printInfo(){
     printPlayerInfo(this->name, this->level, this->force, this->HP, this->coins);
 }
 
-void Player::levelup(){
+void Player::levelUp(){
     this->level++;
 }
 

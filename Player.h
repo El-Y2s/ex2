@@ -18,7 +18,7 @@ public:
     Player(char* name, const int maxHp = 100, const int force = 5);
 
     void printInfo();
-    void levelup();
+    void levelUp();
     const int getLevel();
     void buff(int i);
     void heal(int i);
