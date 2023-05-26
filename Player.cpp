@@ -18,13 +18,16 @@ int isValidMaxHP(int MaxHP){
 }
 
 Player::Player(const char* otherName, int otherMaxHP, int otherForce)
-:   m_name(strcpy(new char[strlen(otherName+1)], otherName)),
-    m_level(1),
-    m_force(isValidForce(otherForce)),
-    m_maxHP(isValidMaxHP(otherMaxHP)),
-    m_HP(m_maxHP),
-    m_coins(0)
-{}
+    : m_name(new char[strlen(otherName) + 1]),
+      m_level(1),
+      m_force(isValidForce(otherForce)),
+      m_maxHP(isValidMaxHP(otherMaxHP)),
+      m_HP(m_maxHP),
+      m_coins(0)
+{
+    strcpy(m_name, otherName);
+}
+
 
 Player::Player(const Player& otherPlayer)
 :   m_name(strcpy(new char[strlen(otherPlayer.m_name+1)], otherPlayer.m_name)),
