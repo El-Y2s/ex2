@@ -1,69 +1,94 @@
 #include "Player.h"
 #include "utilities.h"
+#include <iostream>
+#include <cstring>
 
-Player::Player(char* otherName, int otherMaxHP = 100, int otherForce = 5)
-{
-    this->name = otherName;
-    this->level = 1;
-    this->coins = 0;
-
-    if(otherMaxHP <= 0)     otherMaxHP = 100;
-    if(otherForce <  0)     otherForce = 5;
-    this->force = otherForce;
-    this->maxHP = otherMaxHP;
-    
-    this->HP = otherMaxHP;
+// checks if the force Input is valid
+// returns the force Input if valid, or the default force if not
+int isValidForce(int forceIn){
+    if(forceIn < 0) return 5;
+    return forceIn;
 }
 
+// checks if the MaxHP Input is valid
+// returns the MaxHP Input if valid, or the default MaxHP if not
+int isValidMaxHP(int MaxHP){
+    if(MaxHP <= 0) return 100;
+    return MaxHP;
+}
+
+Player::Player(const char* otherName, int otherMaxHP, int otherForce)
+:   m_name(strcpy(new char[strlen(otherName+1)], otherName)),
+    m_level(1),
+    m_force(isValidForce(otherForce)),
+    m_maxHP(isValidMaxHP(otherMaxHP)),
+    m_HP(m_maxHP),
+    m_coins(0)
+{}
+
+Player::Player(const Player& otherPlayer)
+:   m_name(strcpy(new char[strlen(otherPlayer.m_name+1)], otherPlayer.m_name)),
+    m_level(1),
+    m_force(isValidForce(otherPlayer.m_force)),
+    m_maxHP(isValidMaxHP(otherPlayer.m_maxHP)),
+    m_HP(m_maxHP),
+    m_coins(0)
+{}
+
+
 void Player::printInfo() const{
-    printPlayerInfo(name, level, force, HP, coins);
+    printPlayerInfo(m_name, m_level, m_force, m_HP, m_coins);
 }
 
 void Player::levelUp(){
-    if(level == 10) return;
-    level++;
+    if(m_level == MAX_LEVEL) return;
+    m_level++;
 }
 
 int Player::getLevel() const{
-    return level;
+    return m_level;
 }
 
 void Player::buff(const int i){
-    force += i;
+    m_force += i;
 }
 
 void Player::heal(const int i){
     if(i <= 0) return;
-    if((HP + i) >= maxHP){
-        HP = maxHP;
+    if((m_HP + i) >= m_maxHP){
+        m_HP = m_maxHP;
         return;
     }
-    HP += i;
+    m_HP += i;
 }
 
 void Player::damage(const int i){
     if(i <= 0) return;
-    if(HP <= i){
-        HP = 0;
+    if(m_HP <= i){
+        m_HP = 0;
         return;
     }
-    HP -= i;
+    m_HP -= i;
 }
 
 bool Player::isKnockedOut() const{
-    return !(HP);
+    return !(m_HP);
 }
 
 void Player::addCoins(const int i){
-    coins += i;
+    m_coins += i;
 }
 
 bool Player::pay(const int i){
-    if(coins < i) return false;
-    coins -= i;
+    if(m_coins < i) return false;
+    m_coins -= i;
     return true;
 }
 
 int Player::getAttackStrength() const{
-    return (force + level); 
+    return (m_force + m_level); 
+}
+
+Player::~Player(){
+    delete[] m_name;
 }

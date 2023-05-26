@@ -29,6 +29,14 @@ public:
     */
     Mtmchkin(const char* playerName, const Card* cardsArray, int numOfCards);
 
+    /*
+     * Copy C'tor of the game:
+     *
+     * @param otherMtmchkin - The game to be copied.
+     * @result
+     *      An instance of Mtmchkin identical to the first.
+    */
+    Mtmchkin(Mtmchkin& otherMtmchkin);
 
     /*
      * Play the next Card - according to the instruction in the exercise document
@@ -57,11 +65,20 @@ public:
      */
     GameStatus getGameStatus() const;
 
-    //TODO: complete the Mtmchkin class.
+    /*
+     * D'tor of the game:
+     *
+     * @result
+     *      the destruction of the game
+    */
+    ~Mtmchkin();
+
 
 private:
-    //TODO: complete the Mtmchkin class.
-
+    Player m_player;
+    const Card* m_cardsArray;
+    const int m_numOfCards;
+    int m_curCard;
 };
 
 
